@@ -25,19 +25,28 @@ namespace ConsoleApp
             //create some threads with different deviceId and log files
             List<Task> tasks = new List<Task>();
             int nro = 0;
-            while (nro <= 5) {
+            while (nro <= 5)
+            {
                 int x = nro;
                 //get the test file in debug folder
                 string path =
                     Path.Combine(@"C:\Temp", "LogFile" + x + ".csv");
                 //create a new thread
-                Task t = Task.Run(() => {
-                    //call the parseEvent
-                    matchPattern.ParseEvents(
-                    //create a new deviceId for each thread
-                    "HV" + x,
-                    //load different csv file for each thread
-                    new StreamReader(path));
+                Task t = Task.Run(() =>
+                {
+                    try
+                    {
+                        //call the parseEvent
+                        matchPattern.ParseEvents(
+                        //create a new deviceId for each thread
+                        "HV" + x,
+                        //load different csv file for each thread
+                        new StreamReader(path));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                 });
                 //add the new task to the list so can wait all threads to finish in the end
                 tasks.Add(t);
@@ -52,7 +61,7 @@ namespace ConsoleApp
             Task.WaitAll(tasks.ToArray());
             //print the final results
             Console.WriteLine(matchPattern.GetEventCounts());
-
+            
             Console.ReadLine();
         }
     }
