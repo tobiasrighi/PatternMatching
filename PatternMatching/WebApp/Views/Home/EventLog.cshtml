@@ -1,0 +1,34 @@
+﻿<div id="PartialDiv">
+</div>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    var auxNro = 0;
+    function refresh() {
+        calculate();
+        $.getJSON("/Home/PartialEventLog", function (dataResponse) {
+            $('#PartialDiv').html(dataResponse);
+        });
+        if (auxNro == 5) {
+        //    calculate();
+        //    auxNro = 0;
+            return;
+        }
+        auxNro = auxNro + 1;
+
+        setTimeout(refresh(), 5000);
+    };
+
+    var number = 0;
+    function calculate() {
+        $.getJSON("/Home/PartialCalculate", { nro: number }, function (dataResponse) {
+        });
+        number = number + 1;
+        if (number > 5)
+            number = 0;
+    };
+
+    $(document).ready(function () {
+        refresh();
+    });
+</script>

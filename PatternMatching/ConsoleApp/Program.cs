@@ -41,7 +41,10 @@ namespace ConsoleApp
                 });
                 //add the new task to the list so can wait all threads to finish in the end
                 tasks.Add(t);
+                //print the results so far
                 Console.WriteLine(matchPattern.GetEventCounts());
+                //add 2 seconds delay
+                //Thread.Sleep(2000);
                 nro += 1;
             }
 

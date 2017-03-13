@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("EventLog", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="submit" name="Submit" id="Submit" value="Read Log" />
+}
