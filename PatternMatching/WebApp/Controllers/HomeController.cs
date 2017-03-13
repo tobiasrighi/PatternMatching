@@ -22,34 +22,54 @@ namespace WebApp.Controllers
         [HttpPost]
         public ActionResult EventLog()
         {
+            if (TempData.Peek("Model") != null)
+            {
+                Model = (LogEventModel)TempData.Peek("Model");
+                MatchingPattern matchPattern = new MatchingPattern(Model.logEvents);
+
+                List<Task> tasks = new List<Task>();
+                int nro = 0;
+                while (nro <= 5)
+                {
+                    int x = nro;
+
+                    //get the test file in debug folder
+                    string path =
+                        Path.Combine(Server.MapPath("~/App_Data/"), "LogFile" + x + ".csv");
+                    //create a new thread
+                    Task t = Task.Run(() =>
+                    {
+                        //call the parseEvent
+                        matchPattern.ParseEvents(
+                        //create a new deviceId for each thread
+                        "HV" + x,
+                        //load different csv file for each thread
+                        new StreamReader(path));
+                    });
+                    //add the new task to the list so can wait all threads to finish in the end
+                    tasks.Add(t);
+                    TempData["Model"] = Model;
+                    nro += 1;
+                }
+            }
+
             //if (TempData.Peek("Model") != null)
             //{
             //    Model = (LogEventModel)TempData.Peek("Model");
             //    MatchingPattern matchPattern = new MatchingPattern(Model.logEvents);
 
-            //    List<Task> tasks = new List<Task>();
             //    int nro = 0;
             //    while (nro <= 5)
             //    {
             //        int x = nro;
+            //        string path = Path.Combine(Server.MapPath("~/App_Data/"), "LogFile" + x + ".csv");
 
-            //        //get the test file in debug folder
-            //        string path =
-            //            Path.Combine(Server.MapPath("~/App_Data/"), "LogFile" + x + ".csv");
-            //        //create a new thread
-            //        Task t = Task.Run(() =>
+            //        Thread to = new Thread(() =>
             //        {
-            //            //call the parseEvent
-            //            matchPattern.ParseEvents(
-            //            //create a new deviceId for each thread
-            //            "HV" + x,
-            //            //load different csv file for each thread
-            //            new StreamReader(path));
+            //            matchPattern.ParseEvents("HV" + x, new StreamReader(path));
             //        });
-            //        //add the new task to the list so can wait all threads to finish in the end
-            //        tasks.Add(t);
-            //        TempData["Model"] = Model;
-            //        nro += 1;
+            //        to.IsBackground = true;
+            //        to.Start();
             //    }
             //}
             return View();
@@ -67,39 +87,48 @@ namespace WebApp.Controllers
                 return Json("EMPTY", JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult PartialCalculate(int nro)
-        {
-            if (TempData.Peek("Model") != null)
-            {
-                Model = (LogEventModel)TempData.Peek("Model");
-                MatchingPattern matchPattern = new MatchingPattern(Model.logEvents);
+        //public JsonResult PartialCalculate(int nro)
+        //{
+        //    if (TempData.Peek("Model") != null)
+        //    {
+        //        Model = (LogEventModel)TempData.Peek("Model");
+        //        MatchingPattern matchPattern = new MatchingPattern(Model.logEvents);
 
-                //List<Task> tasks = new List<Task>();
-                //while (nro <= 5)
-                //{
-                //    int x = nro;
+        //        //List<Task> tasks = new List<Task>();
+        //        //while (nro <= 5)
+        //        //{
+        //        //    int x = nro;
 
-                    //get the test file in debug folder
-                    string path =
-                        Path.Combine(Server.MapPath("~/App_Data/"), "LogFile" + nro + ".csv");
-                    //create a new thread
-                    Task t = Task.Run(() =>
-                    {
-                        //call the parseEvent
-                        matchPattern.ParseEvents(
-                        //create a new deviceId for each thread
-                        "HV" + nro,
-                        //load different csv file for each thread
-                        new StreamReader(path));
-                    });
-                    //add the new task to the list so can wait all threads to finish in the end
-                    //tasks.Add(t);
-                    TempData["Model"] = Model;
-                    //nro += 1;
-                //}
-            }
+        //            //get the test file in debug folder
+        //            string path =
+        //                Path.Combine(Server.MapPath("~/App_Data/"), "LogFile" + nro + ".csv");
 
-            return Json("EMPTY", JsonRequestBehavior.AllowGet);
-        }
+        //        Thread to = new Thread(() =>
+        //        {
+        //            matchPattern.ParseEvents("HV" + nro, new StreamReader(path));
+        //            //TempData["Model"] = Model;
+        //        });
+        //        to.IsBackground = true;
+        //        to.Start();
+
+        //            ////create a new thread
+        //            //Task t = Task.Run(() =>
+        //            //{
+        //            //    //call the parseEvent
+        //            //    matchPattern.ParseEvents(
+        //            //    //create a new deviceId for each thread
+        //            //    "HV" + nro,
+        //            //    //load different csv file for each thread
+        //            //    new StreamReader(path));
+        //            //});
+        //            ////add the new task to the list so can wait all threads to finish in the end
+        //            ////tasks.Add(t);
+        //            //TempData["Model"] = Model;
+        //            ////nro += 1;
+        //        //}
+        //    }
+
+        //    return Json("EMPTY", JsonRequestBehavior.AllowGet);
+        //}
     }
 }
