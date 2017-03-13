@@ -47,18 +47,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="bin\Debug\TestData\LogFile0.csv" />
-    <None Include="bin\Debug\TestData\LogFile1.csv" />
-    <None Include="bin\Debug\TestData\LogFile2.csv" />
-    <None Include="bin\Debug\TestData\LogFile3.csv" />
-    <None Include="bin\Debug\TestData\LogFile4.csv" />
-    <None Include="bin\Debug\TestData\LogFile5.csv" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PatternLib\PatternLib.csproj">
       <Project>{d929791a-53fd-4a28-a256-25bc822820e6}</Project>
       <Name>PatternLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

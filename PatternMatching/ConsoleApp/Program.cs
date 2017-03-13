@@ -29,7 +29,7 @@ namespace ConsoleApp
                 int x = nro;
                 //get the test file in debug folder
                 string path =
-                    Path.Combine(Directory.GetCurrentDirectory(), "TestData", "LogFile" + x + ".csv");
+                    Path.Combine(@"C:\Temp", "LogFile" + x + ".csv");
                 //create a new thread
                 Task t = Task.Run(() => {
                     //call the parseEvent

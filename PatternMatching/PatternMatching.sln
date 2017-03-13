@@ -4,6 +4,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4E1DCA87-DB25-4C4A-BB4A-56582A739635}"
+	ProjectSection(SolutionItems) = preProject
+		WebApplication1\App_Data\LogFile0.csv = WebApplication1\App_Data\LogFile0.csv
+		WebApplication1\App_Data\LogFile1.csv = WebApplication1\App_Data\LogFile1.csv
+		WebApplication1\App_Data\LogFile2.csv = WebApplication1\App_Data\LogFile2.csv
+		WebApplication1\App_Data\LogFile3.csv = WebApplication1\App_Data\LogFile3.csv
+		WebApplication1\App_Data\LogFile4.csv = WebApplication1\App_Data\LogFile4.csv
+		WebApplication1\App_Data\LogFile5.csv = WebApplication1\App_Data\LogFile5.csv
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatternLib", "PatternLib\PatternLib.csproj", "{D929791A-53FD-4A28-A256-25BC822820E6}"
 EndProject
